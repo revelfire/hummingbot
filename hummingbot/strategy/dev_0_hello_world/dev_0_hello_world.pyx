@@ -112,6 +112,9 @@ cdef class HelloWorldStrategy(StrategyBase):
 
             warning_lines.extend(self.balance_warning([market_info]))
 
+        df = self.wallet_balance_data_frame(self._asset_trading_pair)
+        # df.show()
+
         if len(warning_lines) > 0:
             lines.extend(["", "*** WARNINGS ***"] + warning_lines)
 

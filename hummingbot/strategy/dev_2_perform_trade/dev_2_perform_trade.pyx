@@ -116,12 +116,16 @@ cdef class PerformTradeStrategy(StrategyBase):
             dict market_info_to_active_orders = self.market_info_to_active_orders
             list active_orders = []
 
+        self.logger().info("starting format status")
+        self.logger().info(self._market_infos)
+
         for market_info in self._market_infos.values():
             active_orders = self.market_info_to_active_orders.get(market_info, [])
 
             warning_lines.extend(self.network_warning([market_info]))
 
             markets_df = self.market_status_data_frame([market_info])
+            markets_df.show()
             markets_df = markets_df.drop(columns=["Adjusted Bid", "Adjusted Ask"])
             lines.extend(["", "  Markets:"] + ["    " + line for line in str(markets_df).split("\n")])
 
@@ -142,6 +146,9 @@ cdef class PerformTradeStrategy(StrategyBase):
 
         if len(warning_lines) > 0:
             lines.extend(["", "*** WARNINGS ***"] + warning_lines)
+
+        self.logger().info("Returning from format_status with:")
+        self.logger().info("\n".join(lines))
 
         return "\n".join(lines)
 

@@ -84,8 +84,7 @@ class SpreadsAdjustedOnVolatility(ScriptBase):
         # Let's round the delta into 0.25% increment to ignore noise and to avoid adjusting the spreads too often.
         spread_adjustment = self.round_by_step(delta, Decimal("0.0025"))
         # Show the user on what's going, you can remove this statement to stop the notification.
-        # self.notify(f"avg_short_volatility: {avg_short_volatility} median_long_volatility: {median_long_volatility} "
-        #             f"spread_adjustment: {spread_adjustment}")
+        self.notify(f"avg_short_volatility: {self.avg_short_volatility} median_long_volatility: {self.median_long_volatility} spread_adjustment: {self.spread_adjustment}")
         new_bid_spread = self.original_bid_spread + spread_adjustment
         # Let's not set the spreads below the originals, this is to avoid having spreads to be too close
         # to the mid price.

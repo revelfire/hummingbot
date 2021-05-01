@@ -9,6 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 from os import (
     listdir,
     path,
+    environ
 )
 import sys
 
@@ -19,7 +20,7 @@ from hummingbot.logger.struct_logger import (
 
 STRUCT_LOGGER_SET = False
 DEV_STRATEGY_PREFIX = "dev"
-_prefix_path = None
+_prefix_path = environ.get("CONF_FILE_PATH").replace("/conf", "") if environ.get("CONF_FILE_PATH") else None
 
 # Do not raise exceptions during log handling
 logging.setLogRecordFactory(StructLogRecord)

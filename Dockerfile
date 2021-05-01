@@ -104,6 +104,7 @@ COPY --chown=hummingbot:hummingbot scripts/ scripts/
 # Install packages required in runtime
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y sudo libusb-1.0 && \
+    apt-get install -y vi && \
     rm -rf /var/lib/apt/lists/*
 
 # Switch to hummingbot user
@@ -118,5 +119,9 @@ COPY docker/etc /etc
 
 # Setting bash as default shell because we have .bashrc with customized PATH (setting SHELL affects RUN, CMD and ENTRYPOINT, but not manual commands e.g. `docker run image COMMAND`!)
 SHELL [ "/bin/bash", "-lc" ]
-CMD /home/hummingbot/miniconda3/envs/$(head -1 setup/environment-linux.yml | cut -d' ' -f2)/bin/python3 bin/hummingbot_quickstart.py \
-    --auto-set-permissions $(id -nu):$(id -ng)
+#CMD /home/hummingbot/miniconda3/envs/$(head -1 setup/environment-linux.yml | cut -d' ' -f2)/bin/python3 bin/hummingbot_quickstart.py \
+#    --auto-set-permissions $(id -nu):$(id -ng)
+#CMD /home/hummingbot/miniconda3/envs/$(head -1 setup/environment-linux.yml | cut -d' ' -f2)/bin/python3 bin/hummingbot_quickstart.py \
+#    --auto-set-permissions $(id -nu):$(id -ng)
+
+#/bin/python3 bin/hummingbot_quickstart.py --auto-set-permissions $(id -nu):$(id -ng)
